@@ -34,7 +34,7 @@ class PickerRenderer(val glView: View) : GLSurfaceView.Renderer {
             Engine.radius = value
         }
     var listener: BubblePickerListener? = null
-    lateinit var items: ArrayList<PickerItem>
+    var items: ArrayList<PickerItem>? = null
     val selectedItems: List<PickerItem?>
         get() = Engine.selectedBodies.map { circles.firstOrNull { circle -> circle.circleBody == it }?.pickerItem }
     var centerImmediately = false
@@ -76,10 +76,10 @@ class PickerRenderer(val glView: View) : GLSurfaceView.Renderer {
     private fun initialize() {
         clear()
         Engine.centerImmediately = centerImmediately
-        Engine.build(items.size, scaleX, scaleY).forEachIndexed { index, body ->
-            circles.add(Item(items[index], body))
+        Engine.build(items!!.size, scaleX, scaleY).forEachIndexed { index, body ->
+            circles.add(Item(items!![index], body))
         }
-        items.forEach { if (it.isSelected) Engine.resize(circles.first { circle -> circle.pickerItem == it }) }
+        items!!.forEach { if (it.isSelected) Engine.resize(circles.first { circle -> circle.pickerItem == it }) }
         if (textureIds == null) textureIds = IntArray(circles.size * 2)
         initializeArrays()
     }

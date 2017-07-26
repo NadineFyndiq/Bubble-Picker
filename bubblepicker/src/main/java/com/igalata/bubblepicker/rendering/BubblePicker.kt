@@ -22,13 +22,6 @@ class BubblePicker : GLSurfaceView {
             field = value
             renderer.backgroundColor = Color(value)
         }
-    @Deprecated(level = DeprecationLevel.WARNING,
-            message = "Use BubblePickerAdapter for the view setup instead")
-    var items: ArrayList<PickerItem>? = null
-        set(value) {
-            field = value
-            renderer.items = value ?: ArrayList()
-        }
     var adapter: BubblePickerAdapter? = null
         set(value) {
             field = value
@@ -74,7 +67,7 @@ class BubblePicker : GLSurfaceView {
         holder.setFormat(PixelFormat.RGBA_8888)
         setRenderer(renderer)
         renderMode = RENDERMODE_CONTINUOUSLY
-        attrs?.let { retrieveAttrubutes(attrs) }
+        attrs?.let { retrieveAttributes(attrs) }
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -110,7 +103,7 @@ class BubblePicker : GLSurfaceView {
 
     private fun isSwipe(event: MotionEvent) = Math.abs(event.x - previousX) > 20 && Math.abs(event.y - previousY) > 20
 
-    private fun retrieveAttrubutes(attrs: AttributeSet) {
+    private fun retrieveAttributes(attrs: AttributeSet) {
         val array = context.obtainStyledAttributes(attrs, R.styleable.BubblePicker)
 
         if (array.hasValue(R.styleable.BubblePicker_maxSelectedCount)) {
